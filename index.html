@@ -89,7 +89,7 @@
             color: white;
             border-radius: 8px;
             display: none;
-font-size: 1rem;
+            font-size: 1rem;
         }
         .sparkle {
             position: absolute;
@@ -181,3 +181,130 @@ font-size: 1rem;
             line-height: 1.6;
             color: white;
         }
+        .comment-item strong {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #ffdb58;
+            margin-bottom: 0.25rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="poster-container">
+        <div class="poster-header">
+            <h1>Một Tuần Nhìn Lại Talkshow!</h1>
+            <p>Cùng chia sẻ hiệu quả từ buổi "Tăng hiệu quả giới thiệu gói BDTD"</p>
+        </div>
+        <div class="poster-content">
+            <h2>Bạn ơi, chia sẻ cùng mình nhé!</h2>
+            <p class="mb-6 text-lg opacity-90">
+                Ánh rất háo hức muốn biết sau một tuần, những kiến thức từ talkshow đã giúp bạn như thế nào trong việc tư vấn gói bảo dưỡng.
+            </p>
+            <div class="space-y-4">
+                <div class="question-item">
+                    <p><strong>1. Trải nghiệm thực tế:</strong> Bạn đã áp dụng cách tư vấn mới như thế nào?</p>
+                </div>
+                <div class="question-item">
+                    <p><strong>2. Phản hồi từ khách hàng:</strong> Cảm xúc của khách hàng có chuyển biến tích cực hơn ra sao?</p>
+                </div>
+                <div class="question-item">
+                    <p><strong>3. Sự tự tin của bạn:</strong> Bạn có thấy tự tin hơn với nội dung và kỹ năng tư vấn của mình?</p>
+                </div>
+            </div>
+        </div>
+        <div class="interactive-section">
+            <p class="mb-6 text-lg font-medium">Đừng ngần ngại chia sẻ câu chuyện của bạn!</p>
+            <button id="feedbackBtn" class="feedback-button">
+                Gửi Phản Hồi Ngay! ✨
+            </button>
+            <div id="feedbackMessage" class="feedback-message">
+                Cảm ơn bạn đã sẵn sàng chia sẻ! Ánh rất trân trọng mọi ý kiến đóng góp. Hãy để lại bình luận chi tiết bên dưới nhé!
+            </div>
+            <form id="feedbackForm">
+                <label for="name">Tên của bạn:</label>
+                <input type="text" id="name" name="name" placeholder="Nhập tên của bạn">
+                <label for="showroom">Showroom:</label>
+                <input type="text" id="showroom" name="showroom" placeholder="Nhập showroom bạn làm việc">
+                <label for="comment">Ý kiến của bạn:</label>
+                <textarea id="comment" name="comment" rows="4" placeholder="Viết phản hồi của bạn ở đây..."></textarea>
+                <button type="submit">Gửi Phản Hồi</button>
+            </form>
+        </div>
+        <div id="commentsSection">
+            <h3>Phản Hồi Từ Mọi Người</h3>
+        </div>
+    </div>
+    <script>
+        // Get the button and message elements
+        const feedbackBtn = document.getElementById('feedbackBtn');
+        const feedbackMessage = document.getElementById('feedbackMessage');
+        const posterContainer = document.querySelector('.poster-container');
+        const feedbackForm = document.getElementById('feedbackForm');
+        const commentsSection = document.getElementById('commentsSection');
+
+        // Add event listener to the button
+        feedbackBtn.addEventListener('click', () => {
+            // Show the feedback message
+            if (feedbackMessage.style.display === 'none' || feedbackMessage.style.display === '') {
+                feedbackMessage.style.display = 'block';
+                feedbackBtn.textContent = 'Ẩn Thông Báo';
+                feedbackForm.style.display = 'block'; // Show the form
+
+                // Add some sparkles
+                for (let i = 0; i < 15; i++) {
+                    createSparkle(feedbackBtn);
+                }
+            } else {
+                feedbackMessage.style.display = 'none';
+                feedbackBtn.innerHTML = 'Gửi Phản Hồi Ngay! ✨';
+                feedbackForm.style.display = 'none'; // Hide the form
+            }
+        });
+
+        function createSparkle(button) {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+            const rect = button.getBoundingClientRect();
+            const containerRect = posterContainer.getBoundingClientRect();
+            const buttonCenterX = rect.left - containerRect.left + rect.width / 2;
+            const buttonCenterY = rect.top - containerRect.top + rect.height / 2;
+            sparkle.style.left = `${buttonCenterX + (Math.random() - 0.5) * rect.width}px`;
+            sparkle.style.top = `${buttonCenterY + (Math.random() - 0.5) * rect.height}px`;
+            sparkle.style.animationDelay = `${Math.random() * 0.5}s`;
+            posterContainer.appendChild(sparkle);
+            sparkle.addEventListener('animationend', () => {
+                sparkle.remove();
+            });
+        }
+
+        // Handle form submission
+        feedbackForm.addEventListener('submit', (event) => {
+            event.preventDefault(); // Prevent page reload
+            const nameInput = document.getElementById('name');
+            const showroomInput = document.getElementById('showroom');
+            const commentInput = document.getElementById('comment');
+            const name = nameInput.value.trim();
+            const showroom = showroomInput.value.trim();
+            const commentText = commentInput.value.trim();
+
+            if (name !== '' && showroom !== '' && commentText !== '') {
+                // Create a new comment element
+                const commentItem = document.createElement('div');
+                commentItem.className = 'comment-item';
+                commentItem.innerHTML = `
+                    <strong>${name} - ${showroom}:</strong>
+                    <p>${commentText}</p>
+                `;
+                commentsSection.appendChild(commentItem); // Add to the comments section
+                nameInput.value = '';
+                showroomInput.value = '';
+                commentInput.value = ''; // Clear the input
+                alert('Cảm ơn bạn đã chia sẻ!');
+            } else {
+                alert('Vui lòng nhập đầy đủ thông tin trước khi gửi!');
+            }
+        });
+    </script>
+</body>
+</html>
