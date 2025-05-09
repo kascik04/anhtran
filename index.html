@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback Talkshow: Nâng Tầm Dịch Vụ</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Be Vietnam Pro', sans-serif;
+            background-color: #f0f9ff;
+        }
+        .poster-container {
+            max-width: 600px;
+            margin: 2rem auto;
+            background: linear-gradient(135deg, #0072ff, #00c6ff);
+            color: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+        }
+        .poster-header {
+            padding: 2rem 2.5rem;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .poster-header h1 {
+            font-size: 2.25rem;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+        .poster-header p {
+            font-size: 1rem;
+            margin-top: 0.5rem;
+            opacity: 0.9;
+        }
+        .poster-content {
+            padding: 2rem 2.5rem;
+        }
+        .poster-content h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: #ffffff;
+        }
+        .question-item {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .question-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+        }
+        .question-item p {
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+        .interactive-section {
+            padding: 2rem 2.5rem;
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+        .feedback-button {
+            background-color: #ffde59;
+            color: #333;
+            font-weight: 700;
+            padding: 0.75rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1.125rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .feedback-button:hover {
+            background-color: #ffd000;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+        .feedback-message {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background-color: #10b981;
+            color: white;
+            border-radius: 8px;
+            display: none;
+font-size: 1rem;
+        }
+        .sparkle {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background: white;
+            border-radius: 50%;
+            animation: sparkle-anim 0.8s ease-out infinite;
+            opacity: 0;
+        }
+        @keyframes sparkle-anim {
+            0% { transform: scale(0) translateY(0); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: scale(1.5) translateY(-20px); opacity: 0; }
+        }
+
+        /* New styles for the form and comments section */
+        #feedbackForm {
+            display: none;
+            margin-top: 2rem;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 8px;
+        }
+        #feedbackForm label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: white;
+            font-weight: 500;
+            font-size: 1rem;
+        }
+        #feedbackForm input,
+        #feedbackForm textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            margin-bottom: 1rem;
+            resize: vertical;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-family: 'Be Vietnam Pro', sans-serif;
+        }
+        #feedbackForm input:focus,
+        #feedbackForm textarea:focus {
+            outline: none;
+            border-color: #ffde59;
+            box-shadow: 0 0 0 3px rgba(255, 222, 89, 0.2);
+        }
+        #feedbackForm button {
+            background-color: #ffde59;
+            color: #333;
+            font-weight: 700;
+            padding: 0.75rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1.125rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        #feedbackForm button:hover {
+            background-color: #ffd000;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+        #commentsSection {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+        }
+        #commentsSection h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: white;
+        }
+        .comment-item {
+            padding: 1rem;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .comment-item p {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: white;
+        }
